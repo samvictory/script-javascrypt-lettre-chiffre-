@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Document sans nom</title>
+</head>
+
+<body>
+	<script>
+		function numLettre(number)
+		{
+			
+			if (isNaN(number)||number<0||number>999)
+				{
+					return "veuillez entrer un nombre entre 0 à 999 :";
+				}
+			
+			
+			var unitsLettre=['','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize','dix-sept','six-huite','dix-neuf'],
+				teensLettre=['','dix','vingt','trente','quarante','cinquante','soixante','soixante','quatre-vingt','quatre-vingt'];
+			
+			var units,tens,hundred;
+			units= number % 10;
+			tens= (number % 100 - units)/10;
+			hundred= (number % 1000 - number % 100)/100;
+			
+			var unitsout,tensout,hundredout;
+			
+			
+			if (number===0)
+				{
+					return 'zéro';
+				}
+			else 
+				
+				{
+					//traitement des unités
+					unitsout=(units===1 && tens>0 && tens!==8 ? 'et-' : '') + unitsLettre[units];
+					
+					//traitement des dizaines
+					if (tens===1 && units>0)
+						{
+							tensout=unitsLettre[10+units];
+							unitsout='';
+						}
+					else if(tens===7 || tens===9)
+						{
+							tensout=teensLettre[tens]+'-'+(tens===7 && units===1 ? 'et-': '')+unitsLettre[10+units];
+							unitsout='';
+						}
+					else
+					{
+						tensout=teensLettre[tens];
+					}
+					
+					
+					tensout=tensout+(units===0 && tens===8 ? 's' :'');
+					
+					//traitement des centaines
+					hundredout=(hundred>1?unitsLettre[hundred]+'-':'')+(hundred>0?'cent':'')+(hundred>1 && tens===0 && units===0?'s':'');
+					
+					//retour au total
+					 return hundredout + (hundredout && tensout ? '-' : '') + tensout + (hundredout && unitsout || tensout && unitsout ? '-' : '') + unitsout;
+				}
+			
+				
+				
+				
+		}
+		
+		var chiffreLettre;
+		while (chiffreLettre=prompt("veuillez entrer un nombre entre 0 à 999 :"))
+			   {
+			   		alert(numLettre(parseInt(chiffreLettre,10)));
+			   }
+	</script>
+</body>
+</html>
